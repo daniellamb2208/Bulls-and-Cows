@@ -24,11 +24,13 @@ def strize(z):
 
 def narrow(z, g, A, B):
     # ref:https://neilchennc.blogspot.com/2010/05/ab.html
+    # Fixed by De Morgan's laws
+    zz = []
+    z.remove(g)
     for i in z:
-        if not diff(i, g) == (A, B):
-            z.remove(i)
-
-    return z
+        if diff(i, g) == (A, B):
+            zz.append(i)
+    return zz
 
 def guess(cc):
     
@@ -52,12 +54,13 @@ def guess(cc):
 
         c = c + 1
         z = narrow(z, _guess, A, B)
+        print("Remaining possible answer: {}".format(len(z)))
 
 # plan to multi-threading
 
 if __name__ == "__main__":
 
-    t = 20
+    t = 100
     p = 0
     for i in range(1,t+1):
       p = p + guess(i)
